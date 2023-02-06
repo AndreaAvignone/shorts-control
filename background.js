@@ -55,6 +55,7 @@
                 var activeTab = tabs[0];
                 var activeTabId = activeTab.id; 
                 sendMessage(activeTabId,'hideShorts');
+
              });
         }
     }
