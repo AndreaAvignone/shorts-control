@@ -77,7 +77,6 @@ function updateTimeLimit(limit){
              });
         }
         else if (key==='limit'){
-          console.log(updateTimeLimit(newValue.toString()));
           timeLimit=updateTimeLimit(newValue.toString());
         }
     }
