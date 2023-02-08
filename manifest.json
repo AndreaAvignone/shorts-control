@@ -3,6 +3,7 @@
   "name": "Shorts Wellbeing",
   "description": "Be aware of your free time",
   "version": "1.0",
+  "options_page": "options.html",
   "background": {
     "service_worker": "background.js"
   },

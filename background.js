@@ -26,16 +26,34 @@
     chrome.notifications.create("", options);
   }
  */
+  async function getTime() {
+    let { limit = Object.keys(['limit']).toString() } = await chrome.storage.local.get('limit');
+    var a = limit.split(':'); // split it at the colons
+    timeLimit = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); 
+    updateTimeLimit(timeLimit);
+}
+function updateTimeLimit(limit){
+  var a = limit.split(':'); // split it at the colons
+  timeLimit = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); 
+  return parseInt(timeLimit);
+}
   var flagShortsAccessed=false;
   var startTime;
   var counter=0;
+  var timeLimit="00:00:10";
   chrome.runtime.onInstalled.addListener(() => {
+    /*
     chrome.storage.local.clear(function() {
         var error = chrome.runtime.lastError;
         if (error) {
             console.error(error);
         }
     });
+    */
+    chrome.storage.local.set({ time: 0});
+    chrome.storage.local.set({ limit: timeLimit});
+    timeLimit=updateTimeLimit(timeLimit);
+
 
   });
 /*
@@ -50,13 +68,17 @@
   */
   chrome.storage.onChanged.addListener((changes, namespace) => {
     for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
-        if (newValue>=10){
+        if (key==='time' && newValue>=timeLimit){
             chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                 var activeTab = tabs[0];
                 var activeTabId = activeTab.id; 
                 sendMessage(activeTabId,'hideShorts');
 
              });
+        }
+        else if (key==='limit'){
+          console.log(updateTimeLimit(newValue.toString()));
+          timeLimit=updateTimeLimit(newValue.toString());
         }
     }
   });

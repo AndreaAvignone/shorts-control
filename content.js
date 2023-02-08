@@ -25,6 +25,7 @@ chrome.runtime.onMessage.addListener(function (msg) {
         chrome.storage.local.set({ hideShortsFlag: true});
         alert("Your time on Shorts is over for today!");
         window.location = 'https://www.youtube.com';
+        window.location = 'https://www.youtube.com';
     }
 });
 async function setTime(new_time) {

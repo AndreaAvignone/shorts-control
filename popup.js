@@ -2,6 +2,7 @@
 const TIME_LIMIT = 0;
 async function getTime() {
     let { time = Object.keys(['time']) } = await chrome.storage.local.get('time');
+    let { limit = Object.keys(['limit']).toString() } = await chrome.storage.local.get('limit');
     const injElement=document.createElement('div');
     injElement.className='base-timer';
     injElement.innerHTML= `
@@ -16,6 +17,7 @@ async function getTime() {
       </span>
     </div>
     <p>Time spent on Shorts today</p>
+    <p>(limit: ${limit})</p> 
     `
     document.body.prepend(injElement);
 }
